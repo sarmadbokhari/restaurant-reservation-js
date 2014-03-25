@@ -1,0 +1,62 @@
+<html>
+<head>
+  <title>Restaurant Reservations</title>
+</head>
+<body>
+
+<input class="claim-input" type="text" value="Your name" onclick='javascript: this.value = ""'>
+<br />
+<button id="claim">Claim a Reservation</button>
+<br />
+<br />
+<input class="reserve-input" type="text" value="Your name" onclick='javascript: this.value = ""'>
+<br />
+<button id="reserve">Make a Reservation</button>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+var reservations = {
+  'Billy': { claimed: false }
+};
+
+$('#claim').on('click', function (e) {
+  var name = prompt("What is your name?");
+  if (reservations[name]){
+    if (!reservations[name]["claimed"]){
+      alert("Welcome to the restaurant!");
+      reservations[name]["claimed"] = true;
+      console.log(reservations);
+    } else {
+      alert("I'm sorry, that reservation has already been claimed.")
+    }
+  } else {
+    var answer = prompt("We don't have a reservation under that name. Would you like to make a reservation?").toLowerCase();
+    while (answer !== "yes" || answer !== "no") {
+      var answer = prompt("We don't have a reservation under that name. Would you like to make a reservation?").toLowerCase();
+    }
+    if (answer === "yes"){
+      return name;
+    } else if (answer === "no") {
+      alert("Okay, have a nice day.")
+    } else {
+      alert("I'm sorry I don't understand, please respond with a yes or no.");
+      return answer;
+    }
+  }
+});
+
+$('#reserve').on('click', function (e) {
+  var name = prompt("What name should we reserve under?");
+  if (reservations[name]){
+    alert("We already have a reservation under that name.")
+  } else {
+    alert("We've added your name to the reservation.");
+    reservations[name] = {claimed: false };
+    console.log(reservations);
+  }
+});
+
+</script>
+</body>
+</html>
